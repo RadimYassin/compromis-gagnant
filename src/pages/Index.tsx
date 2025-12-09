@@ -1,85 +1,88 @@
-import { useState, useEffect, useCallback } from 'react';
-import { AnimatePresence } from 'framer-motion';
+import { useState, useCallback, useEffect } from 'react';
 import SlideNavigation from '@/components/presentation/SlideNavigation';
 import SlideTitre from '@/components/presentation/slides/SlideTitre';
 import SlideIntroduction from '@/components/presentation/slides/SlideIntroduction';
 import SlideSommaire from '@/components/presentation/slides/SlideSommaire';
-import SlideDefinition from '@/components/presentation/slides/SlideDefinition';
-import SlidePrincipes from '@/components/presentation/slides/SlidePrincipes';
-import SlideTechniques from '@/components/presentation/slides/SlideTechniques';
-import SlideSituations from '@/components/presentation/slides/SlideSituations';
-import SlidePsychologie from '@/components/presentation/slides/SlidePsychologie';
-import SlideExemples from '@/components/presentation/slides/SlideExemples';
+import SlideObjectifs from '@/components/presentation/slides/SlideObjectifs';
+import SlideMethodologie from '@/components/presentation/slides/SlideMethodologie';
+import SlideAnalyse from '@/components/presentation/slides/SlideAnalyse';
 import SlideOutils from '@/components/presentation/slides/SlideOutils';
-import SlideConseils from '@/components/presentation/slides/SlideConseils';
 import SlideConclusion from '@/components/presentation/slides/SlideConclusion';
 
 const slides = [
   SlideTitre,
   SlideIntroduction,
   SlideSommaire,
-  SlideDefinition,
-  SlidePrincipes,
-  SlideTechniques,
-  SlideSituations,
-  SlidePsychologie,
-  SlideExemples,
+  SlideObjectifs,
+  SlideMethodologie,
+  SlideAnalyse,
   SlideOutils,
-  SlideConseils,
   SlideConclusion,
 ];
 
 const Index = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
 
-  const goToNext = useCallback(() => {
-    setCurrentSlide((prev) => Math.min(prev + 1, slides.length - 1));
-  }, []);
-
-  const goToPrevious = useCallback(() => {
-    setCurrentSlide((prev) => Math.max(prev - 1, 0));
-  }, []);
-
   const goToSlide = useCallback((index: number) => {
-    setCurrentSlide(index);
+    if (index >= 0 && index < slides.length) {
+      setCurrentSlide(index);
+    }
   }, []);
+
+  const nextSlide = useCallback(() => {
+    goToSlide(currentSlide + 1);
+  }, [currentSlide, goToSlide]);
+
+  const prevSlide = useCallback(() => {
+    goToSlide(currentSlide - 1);
+  }, [currentSlide, goToSlide]);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'Enter') {
-        e.preventDefault();
-        goToNext();
-      } else if (e.key === 'ArrowLeft' || e.key === 'Backspace') {
-        e.preventDefault();
-        goToPrevious();
-      } else if (e.key === 'Home') {
-        e.preventDefault();
-        goToSlide(0);
-      } else if (e.key === 'End') {
-        e.preventDefault();
-        goToSlide(slides.length - 1);
+      switch (e.key) {
+        case 'ArrowRight':
+        case ' ':
+        case 'Enter':
+          e.preventDefault();
+          nextSlide();
+          break;
+        case 'ArrowLeft':
+        case 'Backspace':
+          e.preventDefault();
+          prevSlide();
+          break;
+        case 'Home':
+          e.preventDefault();
+          goToSlide(0);
+          break;
+        case 'End':
+          e.preventDefault();
+          goToSlide(slides.length - 1);
+          break;
       }
     };
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [goToNext, goToPrevious, goToSlide]);
+  }, [nextSlide, prevSlide, goToSlide]);
 
   const CurrentSlideComponent = slides[currentSlide];
 
   return (
-    <div className="min-h-screen bg-background overflow-hidden">
-      <AnimatePresence mode="wait">
-        <CurrentSlideComponent key={currentSlide} />
-      </AnimatePresence>
-      
-      <SlideNavigation
-        currentSlide={currentSlide}
-        totalSlides={slides.length}
-        onPrevious={goToPrevious}
-        onNext={goToNext}
-        onGoToSlide={goToSlide}
-      />
+    <div className="min-h-screen bg-background text-foreground overflow-hidden">
+      <div className="h-screen flex flex-col">
+        <div className="flex-1 overflow-hidden">
+          <CurrentSlideComponent key={currentSlide} />
+        </div>
+        
+        <SlideNavigation
+          currentSlide={currentSlide}
+          totalSlides={slides.length}
+          onPrevious={prevSlide}
+          onNext={nextSlide}
+          onGoToSlide={goToSlide}
+        />
+      </div>
     </div>
   );
 };
