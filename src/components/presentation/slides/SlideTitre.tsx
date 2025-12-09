@@ -1,57 +1,81 @@
 import SlideWrapper from '../SlideWrapper';
 import AnimatedElement from '../AnimatedElement';
-import { Handshake, Users, Target } from 'lucide-react';
+import { Users, Briefcase, Calendar, Shield, Database, Code } from 'lucide-react';
 
 const SlideTitre = () => {
-  return (
-    <SlideWrapper className="bg-gradient-hero text-primary-foreground relative overflow-hidden">
-      {/* Background decorative elements */}
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute top-20 left-20 w-64 h-64 bg-primary-foreground/5 rounded-full blur-3xl" />
-        <div className="absolute bottom-20 right-20 w-96 h-96 bg-secondary/20 rounded-full blur-3xl" />
-      </div>
+  const floatingIcons = [
+    { Icon: Users, delay: 0.5, position: 'top-20 left-20' },
+    { Icon: Briefcase, delay: 0.7, position: 'top-32 right-24' },
+    { Icon: Calendar, delay: 0.9, position: 'bottom-32 left-16' },
+    { Icon: Shield, delay: 1.1, position: 'bottom-20 right-20' },
+    { Icon: Database, delay: 1.3, position: 'top-1/2 left-12' },
+    { Icon: Code, delay: 1.5, position: 'top-1/2 right-12' },
+  ];
 
-      <div className="relative z-10 text-center max-w-4xl mx-auto">
-        <AnimatedElement delay={0.2} direction="scale">
-          <div className="flex justify-center mb-8">
-            <div className="w-24 h-24 rounded-full bg-primary-foreground/10 flex items-center justify-center animate-pulse-glow">
-              <Handshake className="w-12 h-12 text-primary-foreground" />
-            </div>
+  return (
+    <SlideWrapper className="relative overflow-hidden">
+      {/* Background gradient */}
+      <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-background to-secondary/5" />
+      
+      {/* Floating icons */}
+      {floatingIcons.map(({ Icon, delay, position }, index) => (
+        <AnimatedElement key={index} delay={delay} direction="scale">
+          <div className={`absolute ${position} opacity-10`}>
+            <Icon className="w-16 h-16 text-primary animate-float" style={{ animationDelay: `${delay}s` }} />
+          </div>
+        </AnimatedElement>
+      ))}
+
+      {/* Main content */}
+      <div className="relative z-10 text-center max-w-5xl mx-auto">
+        <AnimatedElement delay={0.2}>
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-medium mb-6">
+            <Briefcase className="w-4 h-4" />
+            <span>Projet de Fin d'Année (PFA)</span>
           </div>
         </AnimatedElement>
 
         <AnimatedElement delay={0.4}>
-          <h1 className="font-display text-5xl md:text-7xl font-bold mb-6 leading-tight">
-            Négociation du compromis
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold text-foreground mb-6 leading-tight">
+            Conception et Réalisation d'une
+            <span className="block text-gradient mt-2">Application Web de Gestion RH</span>
           </h1>
         </AnimatedElement>
 
         <AnimatedElement delay={0.6}>
-          <p className="text-xl md:text-2xl text-primary-foreground/80 mb-12 max-w-2xl mx-auto">
-            Techniques, stratégies et bonnes pratiques pour un accord réussi
+          <p className="text-xl md:text-2xl text-muted-foreground mb-8">
+            Human Resources Management Web Application
           </p>
         </AnimatedElement>
 
         <AnimatedElement delay={0.8}>
-          <div className="flex justify-center gap-8 mt-12">
-            <div className="flex flex-col items-center gap-2 animate-float" style={{ animationDelay: '0s' }}>
-              <div className="w-14 h-14 rounded-full bg-primary-foreground/10 flex items-center justify-center">
-                <Users className="w-7 h-7" />
-              </div>
-              <span className="text-sm text-primary-foreground/70">Collaboration</span>
+          <div className="flex flex-wrap justify-center gap-4 mb-10">
+            <div className="px-4 py-2 rounded-lg bg-card border border-border">
+              <span className="text-sm text-muted-foreground">Auteur</span>
+              <p className="font-semibold text-foreground">RADIM Yassine</p>
             </div>
-            <div className="flex flex-col items-center gap-2 animate-float" style={{ animationDelay: '0.3s' }}>
-              <div className="w-14 h-14 rounded-full bg-primary-foreground/10 flex items-center justify-center">
-                <Handshake className="w-7 h-7" />
-              </div>
-              <span className="text-sm text-primary-foreground/70">Compromis</span>
+            <div className="px-4 py-2 rounded-lg bg-card border border-border">
+              <span className="text-sm text-muted-foreground">Filière</span>
+              <p className="font-semibold text-foreground">Génie Informatique & Réseaux - MIAGE</p>
             </div>
-            <div className="flex flex-col items-center gap-2 animate-float" style={{ animationDelay: '0.6s' }}>
-              <div className="w-14 h-14 rounded-full bg-primary-foreground/10 flex items-center justify-center">
-                <Target className="w-7 h-7" />
-              </div>
-              <span className="text-sm text-primary-foreground/70">Succès</span>
+            <div className="px-4 py-2 rounded-lg bg-card border border-border">
+              <span className="text-sm text-muted-foreground">Date de Soutenance</span>
+              <p className="font-semibold text-foreground">20/09/2025</p>
             </div>
+          </div>
+        </AnimatedElement>
+
+        <AnimatedElement delay={1.0}>
+          <div className="flex items-center justify-center gap-2 text-muted-foreground">
+            <span>Membre du Jury :</span>
+            <span className="font-semibold text-foreground">Mme. SNIBA Farah</span>
+          </div>
+        </AnimatedElement>
+
+        <AnimatedElement delay={1.2}>
+          <div className="mt-8 flex items-center justify-center gap-3">
+            <div className="w-3 h-3 rounded-full bg-primary animate-pulse" />
+            <span className="text-sm text-muted-foreground">Appuyez sur → pour continuer</span>
           </div>
         </AnimatedElement>
       </div>

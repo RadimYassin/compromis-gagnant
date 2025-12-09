@@ -1,23 +1,33 @@
 import SlideWrapper from '../SlideWrapper';
 import AnimatedElement from '../AnimatedElement';
-import { Wrench, BookOpen, Monitor, Layout, CheckSquare, ExternalLink } from 'lucide-react';
+import { Wrench, Layout, Server, Database } from 'lucide-react';
 
 const SlideOutils = () => {
-  const livres = [
-    { title: "Getting to Yes", author: "Fisher & Ury", desc: "Négociation raisonnée" },
-    { title: "Negotiation Genius", author: "Malhotra & Bazerman", desc: "Stratégies avancées" },
-  ];
-
-  const outils = [
-    { icon: Layout, name: "Trello / Asana", desc: "Visualiser les options et suivre les décisions" },
-    { icon: Monitor, name: "Miro", desc: "Brainstorming collaboratif et mind mapping" },
-    { icon: CheckSquare, name: "Checklists", desc: "Points à préparer avant chaque négociation" },
-  ];
-
-  const formations = [
-    "Communication assertive",
-    "Gestion des conflits",
-    "Leadership et influence",
+  const technologies = [
+    { 
+      category: "Frontend",
+      icon: Layout,
+      color: "from-blue-500 to-cyan-500",
+      tools: [
+        { name: "Next.js", desc: "Framework React pour le rendu côté serveur" }
+      ]
+    },
+    { 
+      category: "Backend",
+      icon: Server,
+      color: "from-green-500 to-emerald-500",
+      tools: [
+        { name: "Express.js", desc: "Framework Node.js pour l'API REST" }
+      ]
+    },
+    { 
+      category: "ORM / Base de Données",
+      icon: Database,
+      color: "from-purple-500 to-violet-500",
+      tools: [
+        { name: "Prisma", desc: "ORM moderne pour Node.js et TypeScript" }
+      ]
+    },
   ];
 
   return (
@@ -25,91 +35,54 @@ const SlideOutils = () => {
       <div className="max-w-6xl mx-auto w-full">
         <AnimatedElement>
           <div className="flex items-center gap-4 mb-8">
-            <div className="icon-circle-secondary">
+            <div className="icon-circle">
               <Wrench className="w-6 h-6 text-primary-foreground" />
             </div>
-            <h2 className="slide-title mb-0">Outils et ressources</h2>
+            <h2 className="slide-title mb-0">Outils et Technologies</h2>
           </div>
         </AnimatedElement>
 
-        <div className="grid lg:grid-cols-3 gap-6">
-          <AnimatedElement delay={0.2} direction="left">
-            <div className="content-card-elevated h-full">
-              <div className="flex items-center gap-3 mb-5">
-                <BookOpen className="w-6 h-6 text-primary" />
-                <h3 className="text-xl font-display font-semibold text-foreground">Livres recommandés</h3>
-              </div>
-              <div className="space-y-4">
-                {livres.map((livre, index) => (
-                  <div 
-                    key={index}
-                    className="p-4 rounded-lg bg-muted/30 hover:bg-muted/50 transition-colors animate-fade-in"
-                    style={{ animationDelay: `${0.3 + index * 0.1}s` }}
-                  >
-                    <h4 className="font-semibold text-foreground flex items-center gap-2">
-                      {livre.title}
-                      <ExternalLink className="w-4 h-4 text-muted-foreground" />
-                    </h4>
-                    <p className="text-sm text-muted-foreground">{livre.author}</p>
-                    <p className="text-sm text-primary mt-1">{livre.desc}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </AnimatedElement>
-
-          <AnimatedElement delay={0.3} direction="up">
-            <div className="content-card-elevated h-full">
-              <div className="flex items-center gap-3 mb-5">
-                <Monitor className="w-6 h-6 text-secondary" />
-                <h3 className="text-xl font-display font-semibold text-foreground">Applications</h3>
-              </div>
-              <div className="space-y-4">
-                {outils.map((outil, index) => (
-                  <div 
-                    key={index}
-                    className="flex items-start gap-3 p-3 rounded-lg hover:bg-muted/30 transition-colors animate-fade-in"
-                    style={{ animationDelay: `${0.4 + index * 0.1}s` }}
-                  >
-                    <div className="w-10 h-10 rounded-lg bg-secondary/10 flex items-center justify-center flex-shrink-0">
-                      <outil.icon className="w-5 h-5 text-secondary" />
+        <div className="grid md:grid-cols-3 gap-8">
+          {technologies.map((tech, index) => (
+            <AnimatedElement key={index} delay={0.2 + index * 0.15} direction="up">
+              <div className="content-card-elevated h-full group">
+                <div className={`w-16 h-16 mx-auto rounded-2xl bg-gradient-to-br ${tech.color} flex items-center justify-center shadow-xl mb-6 group-hover:scale-110 transition-transform`}>
+                  <tech.icon className="w-8 h-8 text-white" />
+                </div>
+                <h3 className="text-xl font-display font-semibold text-center text-foreground mb-6">{tech.category}</h3>
+                <div className="space-y-4">
+                  {tech.tools.map((tool, toolIndex) => (
+                    <div 
+                      key={toolIndex} 
+                      className="p-4 rounded-xl bg-muted/50 border border-border animate-fade-in"
+                      style={{ animationDelay: `${0.4 + index * 0.1 + toolIndex * 0.05}s` }}
+                    >
+                      <h4 className="font-bold text-foreground mb-1">{tool.name}</h4>
+                      <p className="text-sm text-muted-foreground">{tool.desc}</p>
                     </div>
-                    <div>
-                      <h4 className="font-semibold text-foreground">{outil.name}</h4>
-                      <p className="text-sm text-muted-foreground">{outil.desc}</p>
-                    </div>
-                  </div>
-                ))}
+                  ))}
+                </div>
               </div>
-            </div>
-          </AnimatedElement>
-
-          <AnimatedElement delay={0.4} direction="right">
-            <div className="content-card-elevated h-full bg-gradient-to-br from-card to-primary/5">
-              <div className="flex items-center gap-3 mb-5">
-                <Monitor className="w-6 h-6 text-accent" />
-                <h3 className="text-xl font-display font-semibold text-foreground">Formations</h3>
-              </div>
-              <div className="space-y-3">
-                {formations.map((formation, index) => (
-                  <div 
-                    key={index}
-                    className="flex items-center gap-3 p-3 rounded-lg bg-card shadow-sm animate-fade-in"
-                    style={{ animationDelay: `${0.5 + index * 0.1}s` }}
-                  >
-                    <div className="w-8 h-8 rounded-full bg-accent/20 flex items-center justify-center">
-                      <span className="text-sm font-bold text-accent">{index + 1}</span>
-                    </div>
-                    <span className="text-foreground">{formation}</span>
-                  </div>
-                ))}
-              </div>
-              <p className="mt-5 text-sm text-muted-foreground italic">
-                Disponibles sur LinkedIn Learning, Coursera, Udemy...
-              </p>
-            </div>
-          </AnimatedElement>
+            </AnimatedElement>
+          ))}
         </div>
+
+        <AnimatedElement delay={0.8}>
+          <div className="mt-10 p-6 rounded-2xl bg-gradient-to-r from-primary/5 via-card to-secondary/5 border border-primary/10">
+            <h4 className="font-display font-semibold text-lg text-center text-foreground mb-4">Stack Technique Moderne</h4>
+            <div className="flex flex-wrap justify-center gap-3">
+              {["TypeScript", "React", "Node.js", "PostgreSQL", "JWT", "REST API"].map((item, i) => (
+                <span 
+                  key={i} 
+                  className="px-4 py-2 rounded-full bg-primary/10 text-primary font-medium text-sm animate-fade-in"
+                  style={{ animationDelay: `${0.9 + i * 0.05}s` }}
+                >
+                  {item}
+                </span>
+              ))}
+            </div>
+          </div>
+        </AnimatedElement>
       </div>
     </SlideWrapper>
   );

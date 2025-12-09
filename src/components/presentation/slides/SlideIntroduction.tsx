@@ -1,20 +1,12 @@
 import SlideWrapper from '../SlideWrapper';
 import AnimatedElement from '../AnimatedElement';
-import { MessageCircle, Heart, Users, Clock, Lightbulb, Shield, BookOpen, Zap } from 'lucide-react';
+import { Building2, AlertTriangle, FileX, Lock, GitBranch, HelpCircle } from 'lucide-react';
 
 const SlideIntroduction = () => {
-  const contexteItems = [
-    { icon: Heart, text: "Préserver les relations" },
-    { icon: Users, text: "Résoudre les conflits efficacement" },
-    { icon: Shield, text: "Favoriser la coopération et la confiance" },
-    { icon: Clock, text: "Éviter les tensions inutiles" },
-  ];
-
-  const objectifItems = [
-    { icon: Lightbulb, text: "Comprendre le compromis et ses principes" },
-    { icon: Zap, text: "Découvrir des techniques et stratégies concrètes" },
-    { icon: BookOpen, text: "Savoir les appliquer dans diverses situations" },
-    { icon: MessageCircle, text: "Développer ses compétences en communication" },
+  const problemItems = [
+    { icon: FileX, text: "Erreurs fréquentes dans les congés et données employés" },
+    { icon: Lock, text: "Difficultés de centralisation et sécurité" },
+    { icon: GitBranch, text: "Workflows de décision mal optimisés" },
   ];
 
   return (
@@ -23,49 +15,50 @@ const SlideIntroduction = () => {
         <AnimatedElement>
           <div className="flex items-center gap-4 mb-8">
             <div className="icon-circle">
-              <MessageCircle className="w-6 h-6 text-primary-foreground" />
+              <Building2 className="w-6 h-6 text-primary-foreground" />
             </div>
-            <h2 className="slide-title mb-0">Introduction</h2>
+            <h2 className="slide-title mb-0">Contexte et Problématique</h2>
           </div>
         </AnimatedElement>
 
         <div className="grid md:grid-cols-2 gap-8">
           <AnimatedElement delay={0.2} direction="left">
             <div className="content-card-elevated h-full">
-              <h3 className="text-2xl font-display font-semibold text-primary mb-6">Contexte</h3>
-              <p className="text-muted-foreground mb-6">
-                Les conflits et désaccords sont fréquents dans la vie professionnelle et personnelle. 
-                La négociation du compromis permet de :
+              <h3 className="text-2xl font-display font-semibold text-primary mb-6">Organisme d'Accueil</h3>
+              <div className="flex items-center gap-4 mb-6 p-4 rounded-xl bg-primary/5 border border-primary/10">
+                <div className="w-16 h-16 rounded-xl bg-gradient-to-br from-primary to-secondary flex items-center justify-center">
+                  <Building2 className="w-8 h-8 text-primary-foreground" />
+                </div>
+                <div>
+                  <h4 className="font-bold text-xl text-foreground">Future Link</h4>
+                  <p className="text-muted-foreground text-sm">Spécialisée en systèmes d'information et transformation digitale</p>
+                </div>
+              </div>
+              <p className="text-muted-foreground">
+                Le stage a été effectué au sein de Future Link, une entreprise spécialisée dans les systèmes 
+                d'information et de communication, ainsi que la transformation numérique.
               </p>
-              <ul className="space-y-4">
-                {contexteItems.map((item, index) => (
-                  <li 
-                    key={index} 
-                    className="flex items-center gap-3 animate-fade-in"
-                    style={{ animationDelay: `${0.4 + index * 0.1}s` }}
-                  >
-                    <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
-                      <item.icon className="w-5 h-5 text-primary" />
-                    </div>
-                    <span className="text-foreground">{item.text}</span>
-                  </li>
-                ))}
-              </ul>
             </div>
           </AnimatedElement>
 
           <AnimatedElement delay={0.3} direction="right">
-            <div className="content-card-elevated h-full bg-gradient-to-br from-card to-muted/30">
-              <h3 className="text-2xl font-display font-semibold text-secondary mb-6">Objectifs</h3>
+            <div className="content-card-elevated h-full bg-gradient-to-br from-destructive/5 to-card">
+              <div className="flex items-center gap-3 mb-6">
+                <AlertTriangle className="w-6 h-6 text-destructive" />
+                <h3 className="text-2xl font-display font-semibold text-destructive">Problème Actuel</h3>
+              </div>
+              <p className="text-muted-foreground mb-6">
+                La gestion des ressources humaines repose encore sur des processus manuels, ce qui entraîne :
+              </p>
               <ul className="space-y-4">
-                {objectifItems.map((item, index) => (
+                {problemItems.map((item, index) => (
                   <li 
                     key={index} 
                     className="flex items-center gap-3 animate-fade-in"
                     style={{ animationDelay: `${0.5 + index * 0.1}s` }}
                   >
-                    <div className="w-10 h-10 rounded-lg bg-secondary/10 flex items-center justify-center flex-shrink-0">
-                      <item.icon className="w-5 h-5 text-secondary" />
+                    <div className="w-10 h-10 rounded-lg bg-destructive/10 flex items-center justify-center flex-shrink-0">
+                      <item.icon className="w-5 h-5 text-destructive" />
                     </div>
                     <span className="text-foreground">{item.text}</span>
                   </li>
@@ -75,10 +68,20 @@ const SlideIntroduction = () => {
           </AnimatedElement>
         </div>
 
-        <AnimatedElement delay={0.8}>
-          <p className="text-center text-muted-foreground mt-8 italic">
-            💡 Note pour le présentateur : Demandez au public leurs expériences de négociation récentes
-          </p>
+        <AnimatedElement delay={0.6}>
+          <div className="mt-8 p-6 rounded-2xl bg-gradient-to-r from-primary/10 via-card to-secondary/10 border border-primary/20">
+            <div className="flex items-start gap-4">
+              <div className="w-12 h-12 rounded-xl bg-primary/20 flex items-center justify-center flex-shrink-0">
+                <HelpCircle className="w-6 h-6 text-primary" />
+              </div>
+              <div>
+                <h4 className="font-display font-semibold text-lg text-foreground mb-2">Question Clé</h4>
+                <p className="text-lg text-muted-foreground italic">
+                  "Comment l'application peut-elle automatiser la gestion des congés tout en réduisant les erreurs humaines ?"
+                </p>
+              </div>
+            </div>
+          </div>
         </AnimatedElement>
       </div>
     </SlideWrapper>
